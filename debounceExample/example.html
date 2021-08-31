@@ -1,0 +1,9 @@
+<input type="text" placeholder="Enter search keyword" id="searchTextBox">
+<script src="debounceMethod.js"></script>
+<script>
+    const searchTextBox = document.getElementById("searchTextBox")
+    const handleKeyupEvent = function (e) {
+        console.log("Searching for keyword ", searchTextBox.value)
+    };
+    searchTextBox.addEventListener('keyup', debounce(handleKeyupEvent, 1000));
+</script>
