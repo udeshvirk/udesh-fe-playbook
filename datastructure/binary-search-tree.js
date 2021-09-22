@@ -189,6 +189,22 @@ class BinarySearchTree {
         else
             return node;
     }
+
+    mirror(root) {
+        if (root === null) {
+            return root;
+        }
+        let left, right;
+        if (root.left !== null) {
+            left = this.mirror(root.left);
+        }
+        if (root.right !== null) {
+            right = this.mirror(root.right);
+        }
+        root.right = left;
+        root.left = right;
+        return root;
+    }
 }
 
 // create an object for the BinarySearchTree 

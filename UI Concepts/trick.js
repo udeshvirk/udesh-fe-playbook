@@ -18,3 +18,10 @@ function xyz() {
 a = 10;
 console.log(a);
 var a =5;
+
+/////////////////////////////////////////
+console.log(1);
+Promise.resolve(2).then((val)=>{console.log(val)});
+console.log(3);
+setTimeout(()=>{console.log(4)});
+console.log(5);
