@@ -21,7 +21,7 @@ var a =5;
 
 /////////////////////////////////////////
 console.log(1);
-Promise.resolve(2).then((val)=>{console.log(val)});
+setTimeout(()=>{console.log(2)});
 console.log(3);
-setTimeout(()=>{console.log(4)});
+Promise.resolve(4).then((val)=>{console.log(val)});
 console.log(5);
