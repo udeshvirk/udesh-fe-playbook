@@ -8,6 +8,8 @@ Event Propagation
     https://www.tutorialrepublic.com/javascript-tutorial/javascript-event-propagation.php   
 Promise
 Async/Await
+https://javascript.info/async
+https://www.javascripttutorial.net/es6/javascript-promises/
 
 Debounce/Throttling
     https://www.telerik.com/blogs/debouncing-and-throttling-in-javascript
@@ -71,3 +73,8 @@ https://www.toptal.com/javascript/comprehensive-guide-javascript-design-patterns
     https://www.geeksforgeeks.org/generate-all-binary-strings-from-given-pattern/   
 - pubsub with implementation on,emmit, off, once
 - find the leaf node inner text from dom tree B, where exact same dom tree A and leaf node of A is given
+- https://leanpub.com/understandinges6/read#leanpub-auto-block-bindings
+- https://flaviocopes.com/javascript-template-literals/
+- https://javascript.info/async
+- https://leanpub.com/understandinges6/read#leanpub-auto-functions
+- https://leanpub.com/understandinges6/read#leanpub-auto-destructuring-for-easier-data-access
