@@ -1,7 +1,15 @@
 Closure
+constructor
+    https://rollbar.com/blog/javascript-constructors
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor
+    https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-constructors-in-javascript-2mf6
+    https://www.javascripttutorial.net/javascript-constructor-function/
+    https://www.digitalocean.com/community/tutorials/understanding-prototypes-and-inheritance-in-javascript
+    https://www.educative.io/answers/what-is-a-constructor-in-javascript
 Prototype Inheritance and Class base inheritance
     https://www.toptal.com/javascript/es6-class-chaos-keeps-js-developer-up
-    https://scotch.io/tutorials/demystifying-es6-classes-and-prototypal-inheritance#:~:text=ES6%20prototype%20methods%20can%20be,look%20into%20this%20very%20soon.
+    https://scotch.io/tutorials/demystifying-es6-classes-and-prototypal-inheritance
+    https://dmitripavlutin.com/understanding-constructor-property/
 Event Loop (MicroQueue and MacroQueue)
     https://javascript.info/event-loop
 Event Propagation
