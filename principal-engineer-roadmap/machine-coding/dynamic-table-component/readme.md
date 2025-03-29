@@ -50,8 +50,8 @@ To ensure maintainability, scalability, and clarity, the component should follow
 
 Here's a concise, fully-working Dynamic Table component:
 
-```
-import React, { useState, useMemo } from 'react';
+```tsx
+import React, { useState, useMemo } from "react";
 
 interface Column<T> {
   key: keyof T;
@@ -72,7 +72,7 @@ function DynamicTable<T extends Record<string, any>>({
 }: TableProps<T>) {
   const [sortConfig, setSortConfig] = useState<{
     key: keyof T;
-    direction: 'ascending' | 'descending';
+    direction: "ascending" | "descending";
   } | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,8 +82,10 @@ function DynamicTable<T extends Record<string, any>>({
     if (!sortConfig) return data;
 
     const sorted = [...data].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'ascending' ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'ascending' ? 1 : -1;
+      if (a[sortConfig.key] < b[sortConfig.key])
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key])
+        return sortConfig.direction === "ascending" ? 1 : -1;
       return 0;
     });
 
@@ -102,10 +104,11 @@ function DynamicTable<T extends Record<string, any>>({
       if (prev?.key === column.key) {
         return {
           key: column.key,
-          direction: prev.direction === 'ascending' ? 'descending' : 'ascending',
+          direction:
+            prev.direction === "ascending" ? "descending" : "ascending",
         };
       }
-      return { key: column.key, direction: 'ascending' };
+      return { key: column.key, direction: "ascending" };
     });
   };
 
@@ -123,7 +126,11 @@ function DynamicTable<T extends Record<string, any>>({
                 onClick={() => handleSort(column)}
               >
                 {column.label}
-                {sortConfig?.key === column.key ? (sortConfig.direction === 'ascending' ? ' ▲' : ' ▼') : ''}
+                {sortConfig?.key === column.key
+                  ? sortConfig.direction === "ascending"
+                    ? " ▲"
+                    : " ▼"
+                  : ""}
               </th>
             ))}
           </tr>
@@ -184,7 +191,7 @@ export default DynamicTable;
 
 ⚙️ **Example Usage:**
 
-```
+```tsx
 interface Employee {
   id: number;
   name: string;
@@ -192,16 +199,16 @@ interface Employee {
 }
 
 const employeeData: Employee[] = [
-  { id: 1, name: 'Alice', role: 'Developer' },
-  { id: 2, name: 'Bob', role: 'Designer' },
-  { id: 3, name: 'Charlie', role: 'Product Manager' },
+  { id: 1, name: "Alice", role: "Developer" },
+  { id: 2, name: "Bob", role: "Designer" },
+  { id: 3, name: "Charlie", role: "Product Manager" },
   // ... more data
 ];
 
 const columns: Column<Employee>[] = [
-  { key: 'id', label: 'ID', sortable: true },
-  { key: 'name', label: 'Name', sortable: true },
-  { key: 'role', label: 'Role', sortable: false },
+  { key: "id", label: "ID", sortable: true },
+  { key: "name", label: "Name", sortable: true },
+  { key: "role", label: "Role", sortable: false },
 ];
 
 <DynamicTable data={employeeData} columns={columns} initialPageSize={10} />;

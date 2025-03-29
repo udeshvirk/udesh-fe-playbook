@@ -1,4 +1,8 @@
-### How would you implement a debounce function in JavaScript? Explain the use case for debouncing and walk through your implementation.
+## How would you implement a debounce function in JavaScript?
+
+Explain the use case for debouncing and walk through your implementation.
+
+---
 
 ### Understanding Debounce:
 
@@ -10,6 +14,7 @@ Debouncing is a technique used in JavaScript to delay executing a function until
 
 - **Search Input:**  
   While the user is typing in a search box, avoid sending a request on every keystroke. Instead, wait until the user stops typing for a short duration (e.g., 500ms) before sending a request.
+
 - **Window Resize Event:**  
   Prevent executing expensive layout recalculations on every resize event by running them only after resizing stops.
 
@@ -19,21 +24,14 @@ Debouncing is a technique used in JavaScript to delay executing a function until
 
 Here's how you can implement a simple debounce function in JavaScript:
 
-```
+```javascript
 function debounce(func, delay) {
-let timerId;
-
-return function (...args) {
- const context = this;
-
- // Clear previous timer if function is invoked again within delay
- clearTimeout(timerId);
-
- // Set a new timer to invoke the function after the delay
- timerId = setTimeout(() => {
-   func.apply(context, args);
- }, delay);
-};
+  let timerId;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timerId);
+    timerId = setTimeout(() => func.apply(context, args), delay);
+  };
 }
 ```
 
@@ -53,7 +51,7 @@ return function (...args) {
 
 ### Example Usage:
 
-```
+```javascript
 // Assume we have an input field:
 const searchInput = document.querySelector("#search");
 

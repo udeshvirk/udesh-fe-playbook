@@ -1,4 +1,6 @@
-### Describe the architecture of a web application you have designed or worked on. How did you ensure scalability and maintainability?
+## Describe the architecture of a web application you have designed or worked on. How did you ensure scalability and maintainability?
+
+---
 
 ## **Example Answer: Web Application Architecture**
 
@@ -36,7 +38,6 @@ We used a robust frontend stack:
 #### **c. Clear Separation of Concerns**
 
 - Strict separation between UI presentation, business logic, and API communication layers:
-
   - **Presentation Layer:** Pure React components with minimal logic.
   - **Business Logic Layer:** Hooks and custom utilities encapsulating logic.
   - **API Layer:** Encapsulated API services with Axios instances and interceptors.
@@ -49,13 +50,10 @@ To achieve scalability, the following strategies were implemented:
 
 - **Micro-frontends:** Allowed parallel feature development without interdependencies, increasing velocity.
 - **Performance Optimizations:**
-
   - Code splitting and lazy loading via React's Suspense & Webpack.
   - Caching of data and responses using React Query.
   - Optimization of rendering through memoization, PureComponents, and Virtualized lists.
-
 - **Infrastructure Scalability:**
-
   - Containerized deployments on AWS ECS/Fargate enabled horizontal scaling as demand grew.
 
 ---
@@ -79,5 +77,7 @@ Maintainability was prioritized through:
 - Adopting TypeScript, Micro-frontends, and extensive automation proved essential for sustainable growth.
 
 ---
+
+### **Conclusion**
 
 This architectural strategy resulted in a maintainable, performant, and scalable application that has gracefully supported rapid business expansion, feature addition, and team growth.

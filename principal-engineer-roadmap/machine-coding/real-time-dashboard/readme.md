@@ -51,8 +51,8 @@ RealtimeDashboard/
 
 Reusable hook for WebSocket connection management with automatic reconnection:
 
-```
-import { useEffect, useRef, useState } from 'react';
+```tsx
+import { useEffect, useRef, useState } from "react";
 
 interface WebSocketHook {
   data: number[];
@@ -72,7 +72,7 @@ export function useWebSocket(url: string): WebSocketHook {
       ws.current = new WebSocket(url);
 
       ws.current.onopen = () => {
-        console.log('WebSocket connected');
+        console.log("WebSocket connected");
         setError(null);
       };
 
@@ -82,13 +82,13 @@ export function useWebSocket(url: string): WebSocketHook {
       };
 
       ws.current.onerror = (event) => {
-        console.error('WebSocket error', event);
-        setError('WebSocket encountered an error');
+        console.error("WebSocket error", event);
+        setError("WebSocket encountered an error");
       };
 
       ws.current.onclose = () => {
         if (!isUnmounted) {
-          console.log('WebSocket disconnected, retrying...');
+          console.log("WebSocket disconnected, retrying...");
           reconnectTimeout.current = setTimeout(connect, 3000);
         }
       };
@@ -111,10 +111,10 @@ export function useWebSocket(url: string): WebSocketHook {
 
 Uses `react-chartjs-2` and Chart.js to display incoming data:
 
-```
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
+```tsx
+import React from "react";
+import { Line } from "react-chartjs-2";
+import "chart.js/auto";
 
 interface Props {
   data: number[];
@@ -125,11 +125,11 @@ const LineChart: React.FC<Props> = ({ data }) => {
     labels: data.map((_, i) => i + 1),
     datasets: [
       {
-        label: 'Real-time Data',
+        label: "Real-time Data",
         data,
         fill: true,
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        borderColor: "#3b82f6",
+        backgroundColor: "rgba(59, 130, 246, 0.2)",
         tension: 0.3,
       },
     ],
@@ -160,13 +160,13 @@ export default LineChart;
 
 Main component integrating everything:
 
-```
-import React from 'react';
-import { useWebSocket } from './hooks/useWebSocket';
-import LineChart from './components/LineChart';
+```tsx
+import React from "react";
+import { useWebSocket } from "./hooks/useWebSocket";
+import LineChart from "./components/LineChart";
 
 const Dashboard: React.FC = () => {
-  const { data, error } = useWebSocket('wss://example.com/data');
+  const { data, error } = useWebSocket("wss://example.com/data");
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
