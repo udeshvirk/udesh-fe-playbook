@@ -1,25 +1,28 @@
-// The function should return an array containing repetitions of the number argument.
-// For instance, replicate(3, 5) should return [5,5,5].
-// If the times argument is negative, return an empty array.
+/*
+ * Function to calculate the product of all numbers in an array using recursion.
+ * 
+ * Example:
+ * console.log(productOfArray([1, 2, 3, 10])); // Output: 60
+ * console.log(productOfArray([]));           // Output: 1
+ * console.log(productOfArray([5, 6]));       // Output: 30
+ */
 
-/*function replicate(times, num){
-    function recurse(index, res){
-        res.push(num);
-        if(index === times-1){
-            return res;
-        } else {
-            return recurse(index+1, res)
-        }
+/**
+ * Calculates the product of all numbers in an array.
+ * @param {number[]} arr - The input array of numbers.
+ * @return {number} - The product of all numbers in the array.
+ */
+function productOfArray(arr) {
+    // Base case: If the array is empty, return 1 (multiplicative identity)
+    if (arr.length === 0) {
+        return 1;
     }
-    return recurse(0, [])
-}
-console.log(replicate(3, 5));*/
 
-function replicate(times, num) {
-    if (times <= 0) {
-        return [];
-    } else {
-        return [num].concat(replicate(times - 1, num))
-    }
+    // Recursive case: Multiply the last element with the product of the rest of the array
+    return arr.pop() * productOfArray(arr);
 }
-console.log(replicate(0, 5));
+
+// Example usage
+console.log(productOfArray([1, 2, 3, 10])); // Output: 60
+console.log(productOfArray([]));           // Output: 1
+console.log(productOfArray([5, 6]));       // Output: 30

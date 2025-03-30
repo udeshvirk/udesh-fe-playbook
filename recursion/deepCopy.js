@@ -1,30 +1,61 @@
-function cloneDeep(value) {
-    const type = typeof value;
-    if (Array.isArray(value)) {
-        return value.map((item) => {
-            return cloneDeep(item);
-        });
-    }
+/*
+ * Function to collect all string values from a nested object using recursion.
+ * 
+ * Example:
+ * const obj = {
+ *     stuff: "foo",
+ *     data: {
+ *         val: {
+ *             thing: {
+ *                 info: "bar",
+ *                 moreInfo: {
+ *                     evenMoreInfo: {
+ *                         weMadeIt: "baz"
+ *                     }
+ *                 }
+ *             }
+ *         }
+ *     }
+ * };
+ * console.log(collectStrings(obj)); // Output: ["foo", "bar", "baz"]
+ */
 
-    if (type === 'object' && value !== null) {
-        const obj = {};
-        for (const key in value) {
-            obj[key] = cloneDeep(value[key]);
+/**
+ * Collects all string values from a nested object.
+ * @param {Object} obj - The input object.
+ * @return {string[]} - An array of all string values found in the object.
+ */
+const collectStrings = (obj) => {
+    let stringsArr = []; // Array to store string values
+
+    // Iterate through each key in the object
+    for (const key in obj) {
+        if (typeof obj[key] === 'string') {
+            stringsArr.push(obj[key]); // Add string values to the array
+        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+            // Recursively collect strings from nested objects
+            stringsArr = stringsArr.concat(collectStrings(obj[key]));
         }
-        return obj;
     }
-    return value;
-}
 
-const deepObj = {
-    a: [1, 2, 3, { z: 1 }, "10"],
-    b: {
-        c: [90, 80]
-    },
-    c: 10,
-    d: "30"
-}
-let clonedCopy = cloneDeep(deepObj);
-deepObj.a[3].z = 3;
-console.log(clonedCopy);
-console.log(deepObj);
+    return stringsArr; // Return the array of strings
+};
+
+// Example usage
+const obj = {
+    stuff: "foo",
+    data: {
+        val: {
+            thing: {
+                info: "bar",
+                moreInfo: {
+                    evenMoreInfo: {
+                        weMadeIt: "baz"
+                    }
+                }
+            }
+        }
+    }
+};
+
+console.log(collectStrings(obj)); // Output: ["foo", "bar", "baz"]

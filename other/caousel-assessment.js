@@ -1,3 +1,13 @@
+/*
+ * Service to process carousel data from different JSON structures based on a configuration.
+ * The service dynamically extracts nested object values and maps them to a standardized format.
+ * 
+ * Example:
+ * console.log(carouselSerivce.processCarouselJSON(json1, config1)); // Output: result1
+ * console.log(carouselSerivce.processCarouselJSON(json2, config2)); // Output: result2
+ */
+
+// Sample JSON data
 const json1 = {
     "payload": [
         {
@@ -32,21 +42,6 @@ const json1 = {
         }
     ]
 };
-
-const result1 = [
-    [
-        { type: 'TEXT', value: 'Handbag' },
-        { type: 'URL', value: 'https://example.com/products/handbag' },
-        { type: 'IMAGE', value: 'https://example.com/products/handbag/images/medium.png' },
-        { type: 'TEXT', value: '$50.00' }
-    ],
-    [
-        { type: 'TEXT', value: 'Shoes' },
-        { type: 'URL', value: 'https://example.com/products/shoes' },
-        { type: 'IMAGE', value: 'https://example.com/products/shoes/images/medium.png' },
-        { type: 'TEXT', value: '$35.00' }
-    ]
-];
 
 const json2 = [
     [
@@ -87,6 +82,22 @@ const json2 = [
     ]
 ];
 
+// Result formats
+const result1 = [
+    [
+        { type: 'TEXT', value: 'Handbag' },
+        { type: 'URL', value: 'https://example.com/products/handbag' },
+        { type: 'IMAGE', value: 'https://example.com/products/handbag/images/medium.png' },
+        { type: 'TEXT', value: '$50.00' }
+    ],
+    [
+        { type: 'TEXT', value: 'Shoes' },
+        { type: 'URL', value: 'https://example.com/products/shoes' },
+        { type: 'IMAGE', value: 'https://example.com/products/shoes/images/medium.png' },
+        { type: 'TEXT', value: '$35.00' }
+    ]
+];
+
 const result2 = [
     [
         { type: 'TEXT', value: 'Handbag' },
@@ -102,9 +113,14 @@ const result2 = [
     ]
 ];
 
+// Service to process carousel data
 class processCarouselService {
-
-    //pick nest obj value dynamically
+    /**
+     * Dynamically retrieves a nested value from an object based on a dot-separated key.
+     * @param {Object} obj - The object to retrieve the value from.
+     * @param {string} str - The dot-separated key string.
+     * @return {*} - The retrieved value or null if not found.
+     */
     getObjConfig(obj, str) {
         const map = str.split('.');
         let val = obj;
@@ -113,9 +129,16 @@ class processCarouselService {
             if (!val) {
                 return null;
             }
-        };
+        }
         return val;
     }
+
+    /**
+     * Processes a JSON object based on a configuration to generate carousel data.
+     * @param {Object|Array} json - The input JSON object or array.
+     * @param {Object} config - The configuration object specifying how to map the data.
+     * @return {Array} - The processed carousel data.
+     */
     processCarouselJSON(json, config) {
         const carouselData = [];
         const products = this.getObjConfig(json, config.products);
@@ -123,65 +146,48 @@ class processCarouselService {
             return [];
         }
         for (const product of products) {
-            const carouselSet = []
+            const carouselSet = [];
             for (const carousel of config.carouselMap) {
                 carouselSet.push({
                     type: carousel.type,
                     value: this.getObjConfig(product, carousel.key)
-                })
+                });
             }
             carouselData.push(carouselSet);
         }
         return carouselData;
-    };
+    }
 }
+
+// Type constants
 const TYPES = {
     text: 'TEXT',
     url: 'URL',
     img: 'IMAGE'
-}
+};
+
+// Configurations for different JSON structures
 const config1 = {
     products: 'payload.0.data',
     carouselMap: [
-        {
-            type: TYPES.text,
-            key: '0.name'
-        },
-        {
-            type: TYPES.url,
-            key: '0.url'
-        },
-        {
-            type: TYPES.img,
-            key: '0.images.medium'
-        },
-        {
-            type: TYPES.text,
-            key: '0.price'
-        },
+        { type: TYPES.text, key: '0.name' },
+        { type: TYPES.url, key: '0.url' },
+        { type: TYPES.img, key: '0.images.medium' },
+        { type: TYPES.text, key: '0.price' }
     ]
-}
+};
+
 const config2 = {
     products: '0',
     carouselMap: [
-        {
-            type: TYPES.text,
-            key: 'meta.en_US.product_name'
-        },
-        {
-            type: TYPES.url,
-            key: 'meta.en_US.product_urls.0'
-        },
-        {
-            type: TYPES.img,
-            key: 'meta.en_US.product_image_medium'
-        },
-        {
-            type: TYPES.text,
-            key: 'meta.en_US.product_custom_attributes.product_price_string'
-        },
+        { type: TYPES.text, key: 'meta.en_US.product_name' },
+        { type: TYPES.url, key: 'meta.en_US.product_urls.0' },
+        { type: TYPES.img, key: 'meta.en_US.product_image_medium' },
+        { type: TYPES.text, key: 'meta.en_US.product_custom_attributes.product_price_string' }
     ]
-}
+};
+
+// Instantiate the service and process the JSON data
 const carouselSerivce = new processCarouselService();
-console.log(carouselSerivce.processCarouselJSON(json1, config1));
-console.log(carouselSerivce.processCarouselJSON(json2, config2));
+console.log(carouselSerivce.processCarouselJSON(json1, config1)); // Output: result1
+console.log(carouselSerivce.processCarouselJSON(json2, config2)); // Output: result2

@@ -1,37 +1,34 @@
-// Promise.all polyfill
-Promise.allNew = (promises) => {
-    return new Promise((resolve, reject) => {
-        var count = promises.length;
-        var result = [];
-        var checkDone = function () { if (--count === 0) resolve(result) }
-        promises.forEach(function (p, i) {
-            p.then(function (x) { result[i] = x }, reject).then(checkDone)
-        })
-    });
-}
+/*
+ * Implement Map polyfill using the `reduce` method.
+ * The `mapMe` method behaves like the native `map` method, returning a new array
+ * with the results of calling a provided function on every element in the original array.
+ * 
+ * Example:
+ * const arr = [1, 2, 3, 4];
+ * console.log(arr.mapMe((item) => item + 1)); // Output: [2, 3, 4, 5]
+ */
 
-// delay helper for creating promises that resolve after ms milliseconds
-function delay(ms, value) {
-    return new Promise(function (pass) {
-        setTimeout(pass, ms, value)
-    })
-}
+/**
+ * Implements a custom `mapMe` method using the `reduce` function.
+ * @param {function} fn - The callback function to execute on each element.
+ * @return {Array} - A new array with the results of calling the callback on each element.
+ */
+Array.prototype.mapMe = function (fn) {
+    return this.reduce((acc, currentValue, index, array) => {
+        // Call the callback function with the current element, index, and array
+        acc.push(fn(currentValue, index, array)); // Add the transformed element to the accumulator
+        return acc; // Return the accumulator for the next iteration
+    }, []); // Initialize the accumulator as an empty array
+};
 
-// resolved promises wait for one another but ensure order is kept
-Promise.allNew([
-    delay(100, 'a'),
-    delay(200, 'b'),
-    delay(50, 'c'),
-    delay(1000, 'd')
-])
-    .then(console.log, console.error) // [ a, b, c, d ]
+// Example usage
+const arr = [1, 2, 3, 4];
 
-// check that error rejects asap
-Promise.allNew([
-    delay(100, 'a'),
-    delay(200, 'b'),
-    Promise.reject(Error('bad things happened')),
-    delay(50, 'c'),
-    delay(1000, 'd')
-])
-    .then(console.log, console.error) // Error: bad things happened
+// Example 1: Increment each element by 1
+console.log(arr.mapMe((item) => item + 1)); // Output: [2, 3, 4, 5]
+
+// Example 2: Multiply each element by 2
+console.log(arr.mapMe((item) => item * 2)); // Output: [2, 4, 6, 8]
+
+// Example 3: Return the index of each element
+console.log(arr.mapMe((item, index) => index)); // Output: [0, 1, 2, 3]
